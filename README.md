@@ -52,7 +52,7 @@ http://docs.trackjs.com/data-api/pageviews-by-day
 
 All of the methods, take a config object:
 
-`
+```javascript
   {
     startDate: <YYYY-MM-DDTHH:MM:SS<timezone>>,
     endDate: <YYYY-MM-DDTHH:MM:SS<timezone>>,
@@ -61,7 +61,7 @@ All of the methods, take a config object:
     application: <application of which to filter results by>,
     sort: <(date|count|usercount)>|<asc|desc>
   }
-`
+```
 
 # Dependencies
 
