@@ -52,7 +52,7 @@ http://docs.trackjs.com/data-api/pageviews-by-day
 
 All of the methods, take a config object:
 
-```javascript
+```json
   {
     startDate: <YYYY-MM-DDTHH:MM:SS<timezone>>,
     endDate: <YYYY-MM-DDTHH:MM:SS<timezone>>,
