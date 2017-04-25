@@ -11,25 +11,24 @@ let api = {
 
     this.baseUrl = 'https://api.trackjs.com/' + this.customerId + '/';
   },
-  errors: function(startDate, endDate, page, pageSize, includeStack, application, cb) {
-    let query = BuildQuery(startDate, endDate, page, pageSize, includeStack, application);
-    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors?' + query), cb);
+  errors: function(configObj, cb) {
+    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors?' + BuildQuery(configObj)), cb);
   },
-  errorsByDay: function(startDate, endDate, page, pageSize, includeStack, application, sorting, cb) {
+  errorsByDay: function(configObj, cb) {
     let query = BuildQuery(startDate, endDate, page, pageSize, includeStack, application);
-    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors/daily?' + query), cb);
+    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors/daily?' + BuildQuery(configObj)), cb);
   },
-  errorsByMessage: function(startDate, endDate, page, pageSize, includeStack, application, sorting, cb) {
+  errorsByMessage: function(configObj, cb) {
     let query = BuildQuery(startDate, endDate, page, pageSize, includeStack, application);
-    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors/daily?' + query), cb);
+    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors/daily?' + BuildQuery(configObj)), cb);
   },
-  errorsByUrl: function(startDate, endDate, page, pageSize, includeStack, application, sorting, cb) {
+  errorsByUrl: function(configObj, cb) {
     let query = BuildQuery(startDate, endDate, page, pageSize, includeStack, application);
-    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors/urls?' + query), cb);
+    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/errors/urls?' + BuildQuery(configObj)), cb);
   },
-  pageViewsByDay: function(startDate, endDate, page, pageSize, includeStack, application, cb) {
+  pageViewsByDay: function(configObj, cb) {
     let query = BuildQuery(startDate, endDate, page, pageSize, includeStack, application);
-    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/hits/daily?' + query), cb);
+    GetRequest(PrepGetRequestOptions(this.baseUrl + api.version + '/hits/daily?' + BuildQuery(configObj)), cb);
   }
 };
 
@@ -58,31 +57,12 @@ function GetRequest(options, cb) {
   });
 }
 
-function BuildQuery(startDate, endDate, page, pageSize, includeStack, application, sorting) {
+function BuildQuery(configObj) {
+  const configKeys = Object.keys(configObj);
   let returnString = [];
 
-  if (startDate) {
-    returnString.push('startDate=' + startDate);
-  }
-
-  if (endDate) {
-    returnString.push('endDate=' + endDate);
-  }
-
-  if (page) {
-    returnString.push('page=' + page);
-  }
-
-  if (pageSize) {
-    returnString.push('pageSize=' + pageSize);
-  }
-
-  if (includeStack) {
-    returnString.push('includeStack=' + includeStack);
-  }
-
-  if (application) {
-    returnString.push('application=' + application);
+  for (const arg of configKeys) {
+    returnString.push(arg + '=' + configObj[arg]);
   }
 
   return returnString.join('&');
